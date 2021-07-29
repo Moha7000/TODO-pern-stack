@@ -15,7 +15,7 @@ app.post("/todos", async (req, res) => {
   try {
     const { description } = req.body;
     const newTodo = await pool.query(
-      "INSERT INTO todo (description) VALUES($1) RETURNING *",
+      "INSERT INTO todos (description) VALUES($1) RETURNING *",
       [description]
     );
 
@@ -29,7 +29,7 @@ app.post("/todos", async (req, res) => {
 
 app.get("/todos", async (req, res) => {
   try {
-    const allTodos = await pool.query("SELECT * FROM todo");
+    const allTodos = await pool.query("SELECT * FROM todos");
     res.json(allTodos.rows);
   } catch (err) {
     console.log(err.message);
@@ -40,9 +40,7 @@ app.get("/todos", async (req, res) => {
 app.get("/todos/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const todo = await pool.query("SELECT * FROM todo WHERE todo_id = $1", [
-      id,
-    ]);
+    const todo = await pool.query("SELECT * FROM todos WHERE id = $1", [id]);
     res.json(todo.rows[0]);
   } catch (err) {
     console.log(err.message);

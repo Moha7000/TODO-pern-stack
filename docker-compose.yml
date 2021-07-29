@@ -5,11 +5,12 @@ services:
     networks:
       - webnet
     environment:
-      POSTGRES_PASSWORD: 123456
-      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: mohanad
       POSTGRES_DB: perntodo
   web:
     image: server
+    entrypoint: ["/bin/bash", "./entrypoint.sh"]
     ports:
       - "5000:5000"
     depends_on:
